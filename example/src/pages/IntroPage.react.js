@@ -1,6 +1,6 @@
 // @flow
 import React from "react";
-// import axios from 'axios'
+import axios from 'axios'
 
 import {
   Header,
@@ -33,6 +33,15 @@ class IntroPage extends React.Component<Props, State> {
     ]
   }
 
+  componentDidMount = () => {
+    axios.get('https://jsonplaceholder.typicode.com/users').then((res) => {
+      const users = res.data
+      this.setState(prevState => ({
+          users
+      }))
+    })
+  }
+
   render() {
     return (
       <SiteWrapper>
@@ -43,13 +52,15 @@ class IntroPage extends React.Component<Props, State> {
                 <div>
                   <Header.H1>Welcome to my Demo</Header.H1>
                 </div>
+                <Grid.Row>
                 { this.state.users.map( user =>
-                  <Grid.Col lg={12}>
+                  <Grid.Col lg={4} key={user.id}>
                     <div>
-                      <Header.H1>{ user.name }</Header.H1>
+                      <Header.H3>{ user.name }</Header.H3>
                     </div>
                   </Grid.Col>
                 ) }
+                </Grid.Row>
               </Grid.Col>
             </Grid.Row>
           </Container>
