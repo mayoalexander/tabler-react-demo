@@ -2,6 +2,7 @@
 import React from "react";
 import axios from 'axios'
 import { Link } from 'react-router-dom'
+import tableStats from '../data/UserTableStats.json'
 
 import {
   Header,
@@ -19,7 +20,7 @@ import {
   List,
   Media,
   Text,
-  Comment,
+  Comment
 } from "tabler-react";
 
 import SiteWrapper from "../SiteWrapper.react";
@@ -102,13 +103,13 @@ class PublicProfile extends React.Component<Props, State> {
                   objectURL="https://via.placeholder.com/150"
                   alt="Generic placeholder image"
                   name={"Axa Global Group"}
-                  address={{
-                    line1: "1290 Avenua of The Americas",
-                    line2: "New York, NY 101040105",
+                  address={this.state.selectedUser.address && {
+                    line1: `${this.state.selectedUser.address.street}`,
+                    line2: `${this.state.selectedUser.address.city}, ${this.state.selectedUser.address.zipcode}`,
                   }}
-                  details={[
-                    { title: "Relationship", content: "Client" },
-                    { title: "Business Type", content: "Insurance Company" },
+                  details={this.state.selectedUser.company && [
+                    { title: "Company Name", content: this.state.selectedUser.company.name },
+                    { title: "Business Type", content: this.state.selectedUser.company.catchPhrase },
                     {
                       title: "Website",
                       content: <a href="http://www.axa.com">http://www.axa.com</a>,
@@ -125,16 +126,7 @@ class PublicProfile extends React.Component<Props, State> {
               <Grid.Col lg={12}>
                 <Header.H4>Recent Orders</Header.H4>
                 <Table
-                bodyItems={[
-                    {
-                      key: 1,
-                      item: [
-                        { content: "1" },
-                        { content: "Jon" },
-                        { content: <Button color="primary">Edit</Button> },
-                      ],
-                    },
-                  ]}
+                bodyItems={tableStats}
                   headerItems={[{ content: "ID" }, { content: "Name" }, { content: "Action" }]} />
               </Grid.Col>
             </Grid.Row>
