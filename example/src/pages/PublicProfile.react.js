@@ -1,263 +1,197 @@
 // @flow
 import React from "react";
-// import axios from 'axios'
+import axios from 'axios'
+import { Link } from 'react-router-dom'
+import mockData from '../data/UserTableStats.json'
 
 import {
+  Header,
   Container,
   Grid,
-  Card,
+  Alert,
   Button,
-  Form,
+  Card,
+  StatsCard,
+  SocialNetworksList,
   Avatar,
-  Profile,
-  List,
-  Media,
-  Text,
-  Comment,
+  ContactCard,
+  Table,
+  BlogCard
 } from "tabler-react";
 
 import SiteWrapper from "../SiteWrapper.react";
 
-function PublicProfile() {
-  console.log({
-    somethig: 'im doin something here!'
-  })
-  return (
-    <SiteWrapper>
-      <div className="my-3 my-md-5">
-        <Container>
-          <Grid.Row>
-            <Grid.Col lg={4}>
-              <Profile
-                name="Peter Richards"
-                backgroundURL="demo/photos/eberhard-grossgasteiger-311213-500.jpg"
-                avatarURL="demo/faces/male/16.jpg"
-                twitterURL="test"
-              >
-                Big belly rude boy, million dollar hustler. Unemployed.
-              </Profile>
-              <Card>
-                <Card.Body>
-                  <Media>
-                    <Avatar
-                      size="xxl"
-                      className="mr-5"
-                      imageURL="demo/faces/male/21.jpg"
-                    />
-                    <Media.BodySocial
-                      name="Juan Hernandez"
-                      workTitle="Webdeveloper"
-                      facebook="Facebook"
-                      twitter="Twitter"
-                      phone="1234567890"
-                      skype="@skypename"
-                    />
-                  </Media>
-                </Card.Body>
-              </Card>
-              <Card>
-                <Card.Header>
-                  <Card.Title>My Profile</Card.Title>
-                </Card.Header>
-                <Card.Body>
-                  <Form>
-                    <Grid.Row>
-                      <Grid.Col auto>
-                        <Avatar size="xl" imageURL="demo/faces/female/9.jpg" />
-                      </Grid.Col>
-                      <Grid.Col>
-                        <Form.Group>
-                          <Form.Label>Email-Address</Form.Label>
-                          <Form.Input placeholder="your-email@domain.com" />
-                        </Form.Group>
-                      </Grid.Col>
-                    </Grid.Row>
-                    <Form.Group>
-                      <Form.Label>Bio</Form.Label>
-                      <Form.Textarea rows={5}>
-                        Big belly rude boy, million dollar hustler. Unemployed.
-                      </Form.Textarea>
-                    </Form.Group>
-                    <Form.Group>
-                      <Form.Label>Email-Address</Form.Label>
-                      <Form.Input placeholder="your-email@domain.com" />
-                    </Form.Group>
-                    <Form.Group>
-                      <Form.Label>Password</Form.Label>
-                      <Form.Input type="password" value="Password" />
-                    </Form.Group>
-                    <Form.Footer>
-                      <Button color="primary" block>
-                        Save
-                      </Button>
-                    </Form.Footer>
-                  </Form>
-                </Card.Body>
-              </Card>
-            </Grid.Col>
-            <Grid.Col lg={8}>
-              <Card>
-                <Card.Header>
-                  <Form.InputGroup>
-                    <Form.Input type="text" placeholder="Message" />
-                    <Form.InputGroup append>
-                      <Button icon="camera" color="secondary" />
-                    </Form.InputGroup>
-                  </Form.InputGroup>
-                </Card.Header>
-                <Comment.List>
-                  <Comment
-                    avatarURL="demo/faces/male/16.jpg"
-                    name="Peter Richards"
-                    date="4 min"
-                    text="Aenean lacinia bibendum nulla sed consectetur. Vestibulum id ligula porta felis euismod semper. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus."
-                    replies={
-                      <React.Fragment>
-                        <Comment.Reply
-                          name="Debra Beck"
-                          avatarURL="demo/faces/female/17.jpg"
-                          text="Donec id elit non mi porta gravida at eget metus. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Donec ullamcorper nulla non metus auctor fringilla. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Sed posuere consectetur est at lobortis."
-                        />
-                        <Comment.Reply
-                          name="Jack Ruiz"
-                          avatarURL="demo/faces/male/32.jpg"
-                          text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus."
-                        />
-                      </React.Fragment>
-                    }
+// load users
+type State = {|
+  users: array,
+  selectedUser: object
+|}
+
+class PublicProfile extends React.Component<Props, State> {
+  state = {
+    users: [],
+    selectedUser: {},
+    analyticsBlocks: mockData.analyticsBlocks,
+    blogPosts: mockData.blogPosts
+  }
+
+  componentDidMount = () => {
+    const userId = this.props.match.params.id
+    axios.get('https://jsonplaceholder.typicode.com/users/' + userId).then((res) => {
+      const user = res.data
+      this.setState(prevState => ({
+          selectedUser: user
+      }))
+    })
+  }
+
+  render = () => {
+    return (
+      <SiteWrapper>
+        <div className="my-3 my-md-5">
+          <Container>
+
+          <Alert type="primary" isDismissible>
+            <Header.H4>New Ways to Explore Your Creatvity</Header.H4>
+            <p>
+              Get full access and take advantage of all the new tools available. You now have the latset version of our dashboard, registration, and public profiles.
+            </p>
+            <Button.List>
+              <Button color="success" RootComponent="button">
+                Learn more
+              </Button>
+              <Button color="secondary" RootComponent="button">
+                No, thanks
+              </Button>
+            </Button.List>
+            </Alert>
+
+            <Grid.Row>
+              <Grid.Col lg={12}>
+                <div class="text-center">
+                  <Avatar imageURL="https://via.placeholder.com/150" className="mb-4" />
+                  <Header.H1>{this.state.selectedUser.name}</Header.H1>
+                  <Header.H4>{this.state.selectedUser.email}</Header.H4>
+                  <SocialNetworksList
+                    itemsObjects={mockData.userSocialLinks}
+                    prefix="fa"
+                    asButtons
                   />
-                  <Comment
-                    avatarURL="demo/faces/male/16.jpg"
-                    date="12 min"
-                    name="Peter Richards"
-                    text="Donec id elit non mi porta gravida at eget metus. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Donec ullamcorper nulla non metus auctor fringilla. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Sed posuere consectetur est at lobortis."
-                  />
-                  <Comment
-                    avatarURL="demo/faces/male/16.jpg"
-                    date="34 min"
-                    name="Peter Richards"
-                    text="Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui."
-                    replies={
-                      <Comment.Reply
-                        name="Wayne Holland"
-                        avatarURL="demo/faces/male/26.jpg"
-                        text=" Donec id elit non mi porta gravida at eget metus. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Donec ullamcorper nulla non metus auctor fringilla. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Sed posuere consectetur est at lobortis."
-                      />
-                    }
-                  />
-                </Comment.List>
-              </Card>
-              <Form className="card">
-                <Card.Body>
-                  <Card.Title>Edit Profile</Card.Title>
-                  <Grid.Row>
-                    <Grid.Col md={5}>
-                      <Form.Group>
-                        <Form.Label>Company</Form.Label>
-                        <Form.Input
-                          type="text"
-                          disabled
-                          placeholder="Company"
-                          value="Creative Code Inc."
-                        />
-                      </Form.Group>
-                    </Grid.Col>
-                    <Grid.Col sm={6} md={3}>
-                      <Form.Group>
-                        <Form.Label>Username</Form.Label>
-                        <Form.Input
-                          type="text"
-                          placeholder="Username"
-                          value="michael23"
-                        />
-                      </Form.Group>
-                    </Grid.Col>
-                    <Grid.Col sm={6} md={4}>
-                      <Form.Group>
-                        <Form.Label>Email address</Form.Label>
-                        <Form.Input type="email" placeholder="Email" />
-                      </Form.Group>
-                    </Grid.Col>
-                    <Grid.Col sm={6} md={6}>
-                      <Form.Group>
-                        <Form.Label>First Name</Form.Label>
-                        <Form.Input
-                          type="text"
-                          placeholder="First Name"
-                          value="Chet"
-                        />
-                      </Form.Group>
-                    </Grid.Col>
-                    <Grid.Col sm={6} md={6}>
-                      <Form.Group>
-                        <Form.Label>Last Name</Form.Label>
-                        <Form.Input
-                          type="text"
-                          placeholder="Last Name"
-                          value="Faker"
-                        />
-                      </Form.Group>
-                    </Grid.Col>
-                    <Grid.Col md={12}>
-                      <Form.Group>
-                        <Form.Label>Address</Form.Label>
-                        <Form.Input
-                          type="text"
-                          placeholder="Home Address"
-                          value="Melbourne, Australia"
-                        />
-                      </Form.Group>
-                    </Grid.Col>
-                    <Grid.Col sm={6} md={4}>
-                      <Form.Group>
-                        <Form.Label>City</Form.Label>
-                        <Form.Input
-                          type="text"
-                          placeholder="City"
-                          value="Melbourne"
-                        />
-                      </Form.Group>
-                    </Grid.Col>
-                    <Grid.Col sm={6} md={3}>
-                      <Form.Group>
-                        <Form.Label>Postal Code</Form.Label>
-                        <Form.Input type="number" placeholder="ZIP Code" />
-                      </Form.Group>
-                    </Grid.Col>
-                    <Grid.Col md={5}>
-                      <Form.Group>
-                        <Form.Label>Country</Form.Label>
-                        <Form.Select>
-                          <option>Germany</option>
-                        </Form.Select>
-                      </Form.Group>
-                    </Grid.Col>
-                    <Grid.Col md={12}>
-                      <Form.Group className="mb=0" label="About Me">
-                        <Form.Textarea
-                          rows={5}
-                          placeholder="Here can be your description"
-                        >
-                          Oh so, your weak rhyme You doubt I'll bother, reading
-                          into it I'll probably won't, left to my own devices
-                          But that's the difference in our opinions.
-                        </Form.Textarea>
-                      </Form.Group>
-                    </Grid.Col>
-                  </Grid.Row>
-                </Card.Body>
-                <Card.Footer className="text-right">
-                  <Button type="submit" color="primary">
-                    Update Profile
-                  </Button>
-                </Card.Footer>
-              </Form>
-            </Grid.Col>
-          </Grid.Row>
-        </Container>
-      </div>
-    </SiteWrapper>
-  );
+                </div>
+
+                <Grid.Row className="mt-5">
+                { this.state.analyticsBlocks.map( (stats, index) =>
+                  <Grid.Col lg={4}>
+                    <StatsCard layout={2} movement={stats.movement} total={stats.value} label={stats.title} />
+                  </Grid.Col>
+                ) }
+                </Grid.Row>
+              </Grid.Col>
+            </Grid.Row>
+            <Grid.Row>
+              <Grid.Col lg={12}>
+                <ContactCard
+                  cardTitle={this.state.selectedUser.name + '\'s Location'}
+                  mapPlaceholder="https://i.stack.imgur.com/RdkOb.jpg"
+                  rounded
+                  objectURL="https://via.placeholder.com/150"
+                  alt="Generic placeholder image"
+                  name={"Axa Global Group"}
+                  address={this.state.selectedUser.address && {
+                    line1: `${this.state.selectedUser.address.street}`,
+                    line2: `${this.state.selectedUser.address.city}, ${this.state.selectedUser.address.zipcode}`,
+                  }}
+                  details={this.state.selectedUser.company && [
+                    { title: "Company Name", content: this.state.selectedUser.company.name },
+                    { title: "Business Type", content: this.state.selectedUser.company.catchPhrase },
+                    {
+                      title: "Website",
+                      content: <a href="http://www.axa.com">http://www.axa.com</a>,
+                    },
+                    { title: "Office Phone", content: "+123456789" },
+                  ]}
+                  description={`Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                   Consectetur dignissimos doloribus eum fugiat itaque
+                  laboriosam maiores nisi nostrum perspiciatis vero.`}
+                />
+              </Grid.Col>
+            </Grid.Row>
+            <Grid.Row className="my-5">
+              <Grid.Col lg={12}>
+                <Header.H4>Recent Orders</Header.H4>
+                <Table
+                  bodyItems={mockData.tableStats}
+                  headerItems={[{ content: "ID" }, { content: "Name" }, { content: "Action" }]} />
+              </Grid.Col>
+            </Grid.Row>
+
+            <Grid.Row cards deck>
+              <Grid.Col md={6}>
+                <Card
+                  statusColor="purple"
+                  title="Card status"
+                  body={`Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Aperiam deleniti fugit incidunt, iste, itaque minima neque pariatur
+                    perferendis sed suscipit velit vitae voluptatem. A consequuntur,
+                    deserunt eaque error nulla temporibus!`}
+                />
+              </Grid.Col>
+              <Grid.Col md={6}>
+                <Card>
+                  <Card.Status color="blue" side />
+                  <Card.Header>
+                    <Card.Title>Card status left side</Card.Title>
+                  </Card.Header>
+                  <Card.Body>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam
+                    deleniti fugit incidunt, iste, itaque minima neque pariatur perferendis
+                    sed suscipit velit vitae voluptatem. A consequuntur, deserunt eaque
+                    error nulla temporibus!
+                  </Card.Body>
+                </Card>
+              </Grid.Col>
+            </Grid.Row>
+
+            <Grid.Row cards deck>
+              <Grid.Col md={6}>
+              {this.state.blogPosts.map((post, index) => (
+                <BlogCard
+                  title={post.title}
+                  postUrl={'/profile/posts/' + index}
+                  description={post.desc}
+                  avatarImgSrc="https://tabler.github.io/tabler/demo/faces/female/18.jpg"
+                  authorName="Rose Bradley"
+                  profileHref={'/profile/' + this.state.selectedUser.id}
+                  date="3 days ago"
+                  imgSrc={post.image}
+                  imgAlt="Penguin"
+                  iconName="heart"
+                  iconHref="#"
+                />
+              ))}
+              </Grid.Col>
+              <Grid.Col md={6}>
+                <Card>
+                  <Card.Status color="blue" side />
+                  <Card.Header>
+                    <Card.Title>Card status left side</Card.Title>
+                  </Card.Header>
+                  <Card.Body>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam
+                    deleniti fugit incidunt, iste, itaque minima neque pariatur perferendis
+                    sed suscipit velit vitae voluptatem. A consequuntur, deserunt eaque
+                    error nulla temporibus!
+                  </Card.Body>
+                </Card>
+              </Grid.Col>
+            </Grid.Row>
+
+
+          </Container>
+        </div>
+      </SiteWrapper>
+    )
+  }
 }
 
 export default PublicProfile;

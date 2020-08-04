@@ -58,6 +58,7 @@ function App(props: Props): React.Node {
           <Route exact path="/maps" component={MapCardsPage} />
           <Route exact path="/pricing-cards" component={PricingCardsPage} />
           <Route exact path="/profile" component={ProfilePage} />
+          <Route exact path="/profile/:id" component={PublicProfile} />
           <Route exact path="/register" component={RegisterPage} />
           <Route exact path="/store" component={StoreCardsPage} />
           <Route component={Error404} />
