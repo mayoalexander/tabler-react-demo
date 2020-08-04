@@ -1,12 +1,14 @@
 // @flow
 import React from "react";
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 import {
   Header,
   Container,
   Grid,
   Card,
+  StatsCard,
   Button,
   Form,
   Avatar,
@@ -21,16 +23,14 @@ import SiteWrapper from "../SiteWrapper.react";
 
 // load users
 type State = {|
-  users: array
+  users: array,
+  selectedUser: object
 |}
 
 class IntroPage extends React.Component<Props, State> {
   state = {
-    users: [
-      { name: 'Tim Cook', id: 1 },
-      { name: 'Steve Jobs', id: 2 },
-      { name: 'Alex Mayo', id: 3 },
-    ]
+    users: [],
+    selectedUser: null
   }
 
   componentDidMount = () => {
@@ -40,6 +40,14 @@ class IntroPage extends React.Component<Props, State> {
           users
       }))
     })
+  }
+
+  openUser = (index) => {
+    const selectedUser = this.state.users[index]
+    this.setState(prevState => ({
+        selectedUser: selectedUser
+    }))
+    this.props.history.push('/profile/' + selectedUser.id)
   }
 
   render() {
@@ -53,11 +61,17 @@ class IntroPage extends React.Component<Props, State> {
                   <Header.H1>Welcome to my Demo</Header.H1>
                 </div>
                 <Grid.Row>
-                { this.state.users.map( user =>
-                  <Grid.Col lg={4} key={user.id}>
-                    <div>
-                      <Header.H3>{ user.name }</Header.H3>
-                    </div>
+                { this.state.users.map( (user, index) =>
+                  <Grid.Col lg={4} key={index}>
+                    <Card>
+                      <Card.Header>
+                        <Card.Title>{ user.name }</Card.Title>
+                      </Card.Header>
+                      <StatsCard layout={2} movement={5} total="423" label="Users online" />
+                      <Card.Body>
+                        <Link color="primary" onClick={() => this.openUser(index)}>A Button</Link>
+                      </Card.Body>
+                    </Card>
                   </Grid.Col>
                 ) }
                 </Grid.Row>
