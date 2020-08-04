@@ -73,10 +73,7 @@ class PublicProfile extends React.Component<Props, State> {
                   <Header.H1>{this.state.selectedUser.name}</Header.H1>
                   <Header.H4>{this.state.selectedUser.email}</Header.H4>
                   <SocialNetworksList
-                    itemsObjects={[
-                      { name: "twitter", label: "Follow", to: "http://www.twitter.com"},
-                      { name: "linkedin", label: "Connect", color: "blue", to: "http://www.linkedin.com" },
-                    ]}
+                    itemsObjects={mockData.userSocialLinks}
                     prefix="fa"
                     asButtons
                   />
@@ -123,7 +120,7 @@ class PublicProfile extends React.Component<Props, State> {
               <Grid.Col lg={12}>
                 <Header.H4>Recent Orders</Header.H4>
                 <Table
-                bodyItems={mockData.tableStats}
+                  bodyItems={mockData.tableStats}
                   headerItems={[{ content: "ID" }, { content: "Name" }, { content: "Action" }]} />
               </Grid.Col>
             </Grid.Row>

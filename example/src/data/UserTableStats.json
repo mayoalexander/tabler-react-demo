@@ -33,5 +33,9 @@
       "desc": "Look, my liege! The Knights Who Say Ni demand a sacrifice! …Are you suggesting that coconuts migr...",
       "image": "https://tabler.github.io/tabler/demo/photos/david-klaasen-54203-500.jpg"
     }
+  ],
+  "userSocialLinks": [
+    { "name": "twitter", "label": "Follow", "to": "http://www.twitter.com"},
+    { "name": "linkedin", "label": "Connect", "color": "blue", "to": "http://www.linkedin.com" }
   ]
 }
