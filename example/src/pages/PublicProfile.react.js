@@ -16,11 +16,7 @@ import {
   Avatar,
   ContactCard,
   Table,
-  Profile,
-  List,
-  Media,
-  Text,
-  Comment
+  BlogCard
 } from "tabler-react";
 
 import SiteWrapper from "../SiteWrapper.react";
@@ -35,7 +31,15 @@ class PublicProfile extends React.Component<Props, State> {
   state = {
     users: [],
     selectedUser: {},
-    analyticsBlocks: ['Daily', 'New Sales', 'New Designs']
+    analyticsBlocks: [
+      { title: 'Daily' , value: 285, movement: '9' },
+      { title: 'New Sales' , value: 559, movement: '-11' },
+      { title: 'New Designs', value: 52, movement: '2' }
+    ],
+    blogPosts: [
+      { title: '6 Tips to stay healthy' },
+      { title: 'Top 10 Places to visit this spring' }
+    ]
   }
 
   componentDidMount = () => {
@@ -86,9 +90,9 @@ class PublicProfile extends React.Component<Props, State> {
                 </div>
 
                 <Grid.Row className="mt-5">
-                { this.state.analyticsBlocks.map( (user, index) =>
+                { this.state.analyticsBlocks.map( (stats, index) =>
                   <Grid.Col lg={4}>
-                    <StatsCard layout={2} movement={5} total="423" label="Users online" />
+                    <StatsCard layout={2} movement={stats.movement} total={stats.value} label={stats.title} />
                   </Grid.Col>
                 ) }
                 </Grid.Row>
@@ -141,6 +145,40 @@ class PublicProfile extends React.Component<Props, State> {
                     perferendis sed suscipit velit vitae voluptatem. A consequuntur,
                     deserunt eaque error nulla temporibus!`}
                 />
+              </Grid.Col>
+              <Grid.Col md={6}>
+                <Card>
+                  <Card.Status color="blue" side />
+                  <Card.Header>
+                    <Card.Title>Card status left side</Card.Title>
+                  </Card.Header>
+                  <Card.Body>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam
+                    deleniti fugit incidunt, iste, itaque minima neque pariatur perferendis
+                    sed suscipit velit vitae voluptatem. A consequuntur, deserunt eaque
+                    error nulla temporibus!
+                  </Card.Body>
+                </Card>
+              </Grid.Col>
+            </Grid.Row>
+
+            <Grid.Row cards deck>
+              <Grid.Col md={6}>
+              {this.state.blogPosts.map(post => (
+                <BlogCard
+                  title="And this isn't my nose. This is a false one."
+                  postUrl="#"
+                  description="Look, my liege! The Knights Who Say Ni demand a sacrifice! …Are you suggesting that coconuts migr..."
+                  avatarImgSrc="https://tabler.github.io/tabler/demo/faces/female/18.jpg"
+                  authorName="Rose Bradley"
+                  profileHref="/profile.html"
+                  date="3 days ago"
+                  imgSrc="https://tabler.github.io/tabler/demo/photos/david-klaasen-54203-500.jpg"
+                  imgAlt="Penguin"
+                  iconName="heart"
+                  iconHref="#"
+                />
+              ))}
               </Grid.Col>
               <Grid.Col md={6}>
                 <Card>
