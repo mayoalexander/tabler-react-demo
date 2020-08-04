@@ -2,7 +2,7 @@
 import React from "react";
 import axios from 'axios'
 import { Link } from 'react-router-dom'
-import tableStats from '../data/UserTableStats.json'
+import mockData from '../data/UserTableStats.json'
 
 import {
   Header,
@@ -31,15 +31,8 @@ class PublicProfile extends React.Component<Props, State> {
   state = {
     users: [],
     selectedUser: {},
-    analyticsBlocks: [
-      { title: 'Daily' , value: 285, movement: '9' },
-      { title: 'New Sales' , value: 559, movement: '-11' },
-      { title: 'New Designs', value: 52, movement: '2' }
-    ],
-    blogPosts: [
-      { title: '6 Tips to stay healthy' },
-      { title: 'Top 10 Places to visit this spring' }
-    ]
+    analyticsBlocks: mockData.analyticsBlocks,
+    blogPosts: mockData.blogPosts
   }
 
   componentDidMount = () => {
@@ -130,7 +123,7 @@ class PublicProfile extends React.Component<Props, State> {
               <Grid.Col lg={12}>
                 <Header.H4>Recent Orders</Header.H4>
                 <Table
-                bodyItems={tableStats}
+                bodyItems={mockData.tableStats}
                   headerItems={[{ content: "ID" }, { content: "Name" }, { content: "Action" }]} />
               </Grid.Col>
             </Grid.Row>
@@ -164,16 +157,16 @@ class PublicProfile extends React.Component<Props, State> {
 
             <Grid.Row cards deck>
               <Grid.Col md={6}>
-              {this.state.blogPosts.map(post => (
+              {this.state.blogPosts.map((post, index) => (
                 <BlogCard
-                  title="And this isn't my nose. This is a false one."
-                  postUrl="#"
-                  description="Look, my liege! The Knights Who Say Ni demand a sacrifice! …Are you suggesting that coconuts migr..."
+                  title={post.title}
+                  postUrl={'/profile/posts/' + index}
+                  description={post.desc}
                   avatarImgSrc="https://tabler.github.io/tabler/demo/faces/female/18.jpg"
                   authorName="Rose Bradley"
-                  profileHref="/profile.html"
+                  profileHref={'/profile/' + this.state.selectedUser.id}
                   date="3 days ago"
-                  imgSrc="https://tabler.github.io/tabler/demo/photos/david-klaasen-54203-500.jpg"
+                  imgSrc={post.image}
                   imgAlt="Penguin"
                   iconName="heart"
                   iconHref="#"

@@ -1,18 +1,37 @@
-[
+{
+  "tableStats": [
+      {
+        "key": 1,
+        "item": [
+          { "content": "1" },
+          { "content": "Jon" },
+          { "content": "" }
+        ]
+      },
+      {
+        "key": 2,
+        "item": [
+          { "content": "1" },
+          { "content": "Jon" },
+          { "content": "" }
+        ]
+      }
+  ],
+  "analyticsBlocks": [
+    { "title": "Daily" , "value": 285, "movement": "9" },
+    { "title": "New Sales" , "value": 559, "movement": "-11" },
+    { "title": "New Designs", "value": 52, "movement": "2" }
+  ],
+  "blogPosts": [
     {
-      "key": 1,
-      "item": [
-        { "content": "1" },
-        { "content": "Jon" },
-        { "content": "" }
-      ]
+      "title": "6 Tips to stay healthy",
+      "desc": "Look, my liege! The Knights Who Say Ni demand a sacrifice! …Are you suggesting that coconuts migr...",
+      "image": "https://tabler.github.io/tabler/demo/photos/david-klaasen-54203-500.jpg"
     },
     {
-      "key": 2,
-      "item": [
-        { "content": "1" },
-        { "content": "Jon" },
-        { "content": "" }
-      ]
+      "title": "Top 10 Places to visit this spring",
+      "desc": "Look, my liege! The Knights Who Say Ni demand a sacrifice! …Are you suggesting that coconuts migr...",
+      "image": "https://tabler.github.io/tabler/demo/photos/david-klaasen-54203-500.jpg"
     }
-]
+  ]
+}
