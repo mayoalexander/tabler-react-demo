@@ -57,19 +57,19 @@ class IntroPage extends React.Component<Props, State> {
           <Container>
             <Grid.Row>
               <Grid.Col lg={12}>
-                <div>
+                <div className="text-center py-5">
                   <Header.H1>Welcome to my Demo</Header.H1>
                 </div>
                 <Grid.Row>
                 { this.state.users.map( (user, index) =>
-                  <Grid.Col lg={4} key={index}>
+                  <Grid.Col width={12} xl={3} lg={4} md={4} sm={12} xs={12} key={index}>
                     <Card>
                       <Card.Header>
                         <Card.Title>{ user.name }</Card.Title>
                       </Card.Header>
                       <StatsCard layout={2} movement={5} total="423" label="Users online" />
-                      <Card.Body>
-                        <Link color="primary" onClick={() => this.openUser(index)}>A Button</Link>
+                      <Card.Body className="pt-0">
+                        <Button color="primary" onClick={() => this.openUser(index)}>View</Button>
                       </Card.Body>
                     </Card>
                   </Grid.Col>
